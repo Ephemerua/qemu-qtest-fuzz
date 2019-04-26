@@ -25,12 +25,12 @@ enum
     READ,
     WRITE,
     TYPENUM
-}
+};
 
 void static inline do_command(unsigned char type, unsigned short port, unsigned long long addr, unsigned long long value)
 {
-    char buf[32]={0xff, 0xff, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00};
-    siwtch(type)
+    char buf[32]={0xff, 0xff, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00};;;
+    switch(type)
     {
         case INB:
             qtest_inb(state, port);break;
@@ -59,7 +59,6 @@ void static inline do_command(unsigned char type, unsigned short port, unsigned 
 
 void start_proxy(char* filename, int port_min, int port_max, unsigned long long addr_start, unsigned long long addr_end)
 {
-    iopl(3);
     fd = open(filename, O_RDONLY);
     if(fd == -1) abort();
     unsigned char type;
@@ -89,7 +88,7 @@ void start_proxy(char* filename, int port_min, int port_max, unsigned long long 
 
 void static inline start_proxy_wrapper()
 {
-    start_proxy(argv[1], 0x3b0, 0x3df, 0xa0000, 0xc0000);
+    start_proxy(g_argv[1], 0x3b0, 0x3df, 0xa0000, 0xc0000);
 }
 
 
