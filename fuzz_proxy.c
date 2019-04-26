@@ -77,6 +77,8 @@ void start_proxy(char* filename, int port_min, int port_max, unsigned long long 
         len = read(fd, &addr, 8);
         if(!len) return;
         len = read(fd, &value, 8);
+        if(!len) return;
+
         type %= TYPENUM;
         port = port%port_range + port_min;
         addr = addr%addr_range + addr_start;
@@ -89,6 +91,7 @@ void start_proxy(char* filename, int port_min, int port_max, unsigned long long 
 void static inline start_proxy_wrapper()
 {
     start_proxy(g_argv[1], 0x3b0, 0x3df, 0xa0000, 0xc0000);
+    qtest_end();
 }
 
 
